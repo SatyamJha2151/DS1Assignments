@@ -79,16 +79,144 @@ void insert (struct node *head)
     printf("\nList: \n");
     display(head);
 }
+void delete (struct node *head)
+{
+    struct node *temp;
+    struct node *prev;
+    prev = head;
+    int ctr = 1, pos, k;
+    struct node *curr;
+    curr = head -> next;
+    printf("\n\nEnter the position:");
+    scanf("%d",&pos);
+    k = length(head);
+    if (k < pos)
+    {
+        printf("\nData can't be deleted");
+    }
+    else
+    {
+        while (ctr < pos && curr != NULL)
+        {
+            ctr++;
+            prev = curr;
+            curr = curr -> next;
+        }
+        temp = curr;
+        prev -> next = curr -> next;
+        curr -> next = NULL;
+        free (temp);
+    }
+    printf("\nList is:\n");
+    display(head);
+}
+void reverse (struct node *head)
+{
+    struct node *prev;
+    struct node *future;
+    prev = NULL;
+    struct node *curr;
+    curr= head -> next;
+    while (curr != NULL)
+    {
+        future = curr -> next;
+        curr -> next = prev;
+        prev = curr;
+        curr = future;
+    }
+    head -> next = prev;
+    printf("\nReversed Linked List is:");
+    display(head);
+}
+void sort (struct node *head)
+{
+    int len;
+    len = length(head);
+    struct node *prev;
+    struct node *curr;
+    struct node *temp;
+    for (int i = 1; i < len; i++)
+    {
+        prev = head;
+        curr = head -> next;
+        for (int j =0; j < len - 1; j++)
+        {
+            temp = curr -> next;
+            if (curr -> value > temp -> value)
+            {
+                prev -> next = temp;
+                curr -> next = temp -> next;
+                temp -> next = curr;
+                prev = temp;
+            }
+            else{
+                prev = curr;
+                curr = curr -> next;
+            }
+        }
+    }
+    printf("\n");
+    display(head);
+}
+void merge (struct node *head, struct node *head2)
+{
+    struct node *curr1;
+    struct node *curr2;
+    struct node *temp;
+    int flag;
+    curr1 = head -> next;
+    curr2 = head2 -> next;
+    if (curr1 -> value < curr2 -> value)
+    {
+        temp = head;
+        flag = 1;
+    }
+    else{
+        temp = head2;
+        flag = 0;
+    }
+    while (curr1 != NULL && curr2 != NULL)
+    {
+        if (curr1 -> value < curr2 -> value)
+        {
+            temp -> next = curr1;
+            temp = curr1;
+            curr1 = curr1 -> next;
+        }
+        else{
+            temp -> next = curr2;
+            temp = curr2;
+            curr2 = curr2 -> next;
+        }
+    }
+    if (curr1 == NULL)
+    {
+        temp -> next = curr2;
+    }
+    if (curr2 == NULL)
+    {
+        temp -> next = curr1;
+    }
+    if (flag == 1)
+    {
+        display(head);
+    }
+    else{
+        display(head2);
+    }
+}
 int main()
 {
     int len, ch, c=1;
     struct node *head;
     head = (struct node*) malloc (sizeof(struct node*));
     head -> next = NULL;
-    
+    struct node *head2;
+    head2 = (struct node*) malloc (sizeof(struct node*));
+    head2 -> next = NULL;
     while (c == 1)
     {
-        printf("\n1.Create a List\n2.Display List\n3.Insert in List");
+        printf("\n1.Create a List\n2.Display List\n3.Insert in List\n4.Delete form List\n5.Reverse List\n6.Sort List\n7.Merge Both Lists");
         printf("\nEnter your choice: ");
         scanf("%d", &ch);
         switch (ch)
@@ -109,6 +237,33 @@ int main()
             {
                 printf("\nInsert values in the linked list\n");
                 insert(head);
+                break;
+            }
+            case 4:
+            {
+                printf("\nDeleting value from the list\n");
+                delete(head);
+                break;
+            }
+            case 5:
+            {
+                printf("\nReversing the Linked List\n");
+                reverse(head);
+                break;
+            }
+            case 6:
+            {
+                printf("\nSorting the Linked List\n");
+                sort(head);
+                break;
+            }
+            case 7:
+            {
+                printf("\nMerging the Lists\n");
+                printf("\nEnter the other list to merge with:\n");
+                create(head2);
+                printf("Merged List is:\n");
+                merge(head, head2);
                 break;
             }
             default:
