@@ -1,0 +1,144 @@
+#include<stdio.h>
+#include<string.h>
+struct book
+{
+    char bookname[10];
+    int id;
+    float cost;
+};
+   void getdata(struct book b[10],int n);
+   void lessfivehundread(struct book b[10], int n);
+   void nosofbooksmorefivehundread(struct book b[10], int n);
+   void display(struct book b[10], int n);
+   void deleteduplicate(struct book b[10], int n);
+   
+void main()
+{
+    struct book b1[10];
+    
+    int n,ch,k=1;
+    printf("enter the number of books : ");
+    scanf("%d",&n);
+    void getdata(struct book b[10],int n);
+    for(int i=0; i<n; i++)
+    {
+     
+     
+        printf("enter the name of the book :");
+        scanf("%s",b1[i].bookname);
+        printf("enter the id of book : ");
+        scanf("%d",&b1[i].id);
+        printf("enter the cost of the book : ");
+        scanf("%f",&b1[i].cost);
+     
+    }
+    
+  
+        
+        do{
+            printf("\nchoose any one option");
+            printf("\n1 less than five hundread ");
+            printf("\n2 remove duplicate ");
+            printf("\n3 more than five hundread ");
+            printf("\n4 display ");
+            printf("\nenter the choice : ");
+            scanf("%d",&ch);
+            
+            switch(ch)
+            {
+                case 1:
+                lessfivehundread(b1,n);
+                printf("\nto continue enter 1 ");
+                scanf("%d",&k);
+                
+                break;
+                case 2:
+                nosofbooksmorefivehundread(b1,n);
+               printf("\nto continue enter 1 ");
+                scanf("%d",&k);
+                break;
+                case 3:
+                deleteduplicate(b1,n);
+                printf("\nto continue enter 1 ");
+                scanf("%d",&k);
+                break;
+                case 4:
+                display(b1,n);
+                printf("\nto continue enter 1 ");
+                scanf("%d",&k);
+                break;
+                
+            }
+            
+        }while(k==1); 
+    
+}
+void lessfivehundread(struct book b1[10], int n)
+{
+    int i,c=0;
+    struct book b2[10];
+    for(i=0;i<n;i++)
+    {
+        if(b1[i].cost<=500.00)
+    {
+        b2[c].id=b1[i].id;
+        strcpy(b2[c].bookname,b1[i].bookname);
+        b2[c].cost=b1[i].cost;
+        c++;
+    }
+    
+}
+if(c==0)
+printf("all books are less than five hundread ");
+else
+{
+    for(i=0;i<c;i++)
+   
+    printf("%d %s %f\n ",b2[i].id,b2[i].bookname,b2[i].cost);
+}
+
+}
+void deleteduplicate (struct book b1[10], int n)
+{
+    	int i,j,k;
+	for(i=0;i<n;i++)
+		{
+		for(j=i+1;j<n;j++)
+		{
+		if(b1[i].id==b1[j].id)
+		{
+			for(k=j;k<n;k++)
+			b1[k]=b1[k+1];
+			n--;
+			j--;
+			}
+		}}
+		for(i=0;i<n;i++)
+	
+	printf("%d     %s     %f\n",b1[i].id,b1[i].bookname,b1[i].cost);
+}
+void nosofbooksmorefivehundread (struct book b1[10],int n)
+{
+	int i,c=0;
+	for(i=0;i<n;i++)
+	{
+		if(b1[i].cost>500)
+		{
+		c++;
+		
+		printf("%d     %s     %f\n",b1[i].id,b1[i].bookname,b1[i].cost);
+	}
+	}
+	if(c==0)
+	printf("price of all books are less than 500");
+	else
+	printf("%d",c);	
+}
+void display(struct book b1[10],int n)
+{
+	int i;
+	for(i=0;i<n;i++)
+	
+	printf("%d     %s     %f\n",b1[i].id,b1[i].bookname,b1[i].cost);
+
+}
