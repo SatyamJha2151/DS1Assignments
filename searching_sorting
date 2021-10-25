@@ -1,0 +1,156 @@
+#include<stdio.h>
+#include<string.h>
+
+struct student
+{
+    char name[80];
+    int rollno;
+    int div;
+    int marks;
+};
+void input(struct student s[10],int n);
+void display(struct student s[10],int n);
+void linearsearch(struct student s[10],int n,int val);
+int binarysearch(struct student s[10],int low,int high,int val);
+int binarySearch(struct student s[10],int low,int high,int val);
+
+int main()
+{
+    struct student s[10];
+    int n;
+    printf("Enter the number of student: ");
+    scanf("%d",&n);
+    input(s,n);
+    display(s,n);
+    //linear search
+    int val;
+    printf("\nEnter the student details you want to search for :");
+    scanf("%d",&val);
+    printf("\nLinear Search: \n");
+    linearsearch(s,n,val);
+    //binary search using recusion
+    printf("\nbinary search using recursion");
+    int bval;
+    printf("\nEnter the student roll no you want to search: ");
+    scanf("%d",&bval);
+    int pos=binarysearch(s,0,n-1,bval);
+    if(pos!=-1)
+    {
+        printf("Element found at index: %d",pos+1);
+        printf("\n student name: %s",s[pos].name);
+        printf("\n student roll no: %d",s[pos].rollno);
+    }
+    else{
+        printf("Element does not exist");
+    }
+
+     //iterative binary search
+     printf("\n\nBinary search using iteration");
+     int bvali;
+    printf("\n\nEnter the student roll no you want to search: ");
+    scanf("%d",&bvali);
+    int position=binarySearch(s,0,n-1,bvali);
+    if(position!=-1)
+    {
+        printf("Element found at index: %d",pos+1);
+        printf("\n Student name: %s",s[position].name);
+        printf("\n student roll no: %d",s[position].rollno);
+    }
+    else{
+        printf("Element does not exist");
+    }
+
+
+    return 0;
+}
+
+  void input(struct student s[10],int n)
+{
+    for(int i=0;i<n;i++)
+    {
+        printf("\n Enter the student name: ");
+        scanf("%s",s[i].name);
+        printf("\n Enter the roll no : ");
+        scanf("%d",&s[i].rollno);
+        printf("\nEnter the div: ");
+        scanf("%d",&s[i].div);
+        printf("\n Enter the marks :");
+        scanf("%d",&s[i].marks);
+    }
+}
+
+ void display(struct student s[10],int n)
+{
+    printf("\nRoll no\tStudent name\tDivision\tmarks");
+    for(int i=0;i<n;i++)
+    {
+        printf("\n%d\t%s\t%d\t%d",s[i].rollno,s[i].name,s[i].div,s[i].marks);
+    }
+}
+
+void linearsearch(struct student s[10],int n,int val)
+{
+    int pos=-1;
+    for(int i=0;i<n;i++)
+    {
+        if(s[i].rollno==val)
+        {
+            pos=i+1;
+            break;
+        }
+    }
+    if(pos!=-1)
+    {
+        printf("\nElement found at index: %d",pos);
+        printf("\nstudent name: %s",s[pos-1].name);
+        printf("\n student roll no: %d",s[pos-1].rollno);
+    }
+    else{
+        printf("Element does not exist");
+    }
+}
+
+int binarysearch(struct student s[10],int low,int high,int val)
+{
+    if(low>high)
+    {
+        return -1;
+    }
+    else
+    {
+        int mid=(low+high)/2;
+        if(val==s[mid].rollno)
+        {
+            return mid;
+        }
+        else if(val<s[mid].rollno)
+        {
+            return binarysearch(s,low,mid-1,val);
+        }
+        else
+        {
+            return binarysearch(s,mid+1,high,val);
+        }
+    }
+}
+
+int binarySearch(struct student s[10],int low,int high,int val)
+{
+    while(low<=high)
+    {
+        int mid=(low+high)/2;
+        if(val==s[mid].rollno)
+        {
+            return mid;
+        }
+        else if(val<s[mid].rollno)
+        {
+            high=mid-1;
+        }
+        else
+        {
+            low=mid+1;
+        }
+    }
+    return -1;
+}
