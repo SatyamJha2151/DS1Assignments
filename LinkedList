@@ -1,0 +1,123 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node
+{
+    int value;
+    struct node *next;
+};
+void create (struct node *head)
+{
+    int v,ch = 1;
+    struct node *temp;
+    temp = head;
+    struct node *curr;
+    while (ch == 1)
+    {
+        curr = (struct node *) malloc (sizeof(struct node));
+        printf("\nEnter the value:");
+        scanf("%d",&v);
+        curr -> value = v;
+        curr -> next = NULL;
+        temp -> next = curr;
+        temp = curr;
+        printf("\nPress 1 to continue: ");
+        scanf("%d", &ch);
+    }
+    printf("\n-------------------\n\n");
+}
+void display (struct node *head)
+{
+    struct node *temp;
+    temp = head -> next;
+    printf("Address\t\t\tNext address\t\tValue\n");
+    while (temp != NULL)
+    {
+        printf("%u\t\t%u\t\t%d\t\n",temp, temp -> next, temp -> value);
+        temp = temp -> next;
+    }
+    printf("\n-------------------\n\n");
+}
+int length (struct node *head)
+{
+    int i = 0;
+    struct node *temp;
+    temp = head -> next;
+    while (temp != NULL)
+    {
+        i++;
+        temp = temp -> next;
+    }
+    return i;
+}
+void insert (struct node *head)
+{
+    int i = 1, pos, v, len;
+    struct node *temp;
+    struct node *newnode;
+    temp = head;
+    newnode = (struct node *) malloc (sizeof(struct node));
+    printf("\nEnter the position:");
+    scanf("%d",&pos);
+    printf("\nEnter the value:");
+    scanf("%d",&v);
+    newnode -> value = v;
+    len = length(head);
+    if (pos > len + 1)
+    {
+        printf("\n\nData can't be inserted");
+    }
+    else 
+    {
+        while (temp != NULL && i < pos)
+        {
+            i++;
+            temp = temp -> next;
+        }
+        newnode -> next = temp -> next;
+        temp -> next = newnode;
+    }
+    printf("\nList: \n");
+    display(head);
+}
+int main()
+{
+    int len, ch, c=1;
+    struct node *head;
+    head = (struct node*) malloc (sizeof(struct node*));
+    head -> next = NULL;
+    
+    while (c == 1)
+    {
+        printf("\n1.Create a List\n2.Display List\n3.Insert in List");
+        printf("\nEnter your choice: ");
+        scanf("%d", &ch);
+        switch (ch)
+        {
+            case 1:
+            {
+                create(head);
+                printf("\nLinked List created\n");
+                break;
+            }
+            case 2:
+            {
+                printf("Displaying the Linked List\n");
+                display(head);
+                break;
+            }
+            case 3:
+            {
+                printf("\nInsert values in the linked list\n");
+                insert(head);
+                break;
+            }
+            default:
+            {
+                printf("Invalid Input");
+                break;
+            }
+        }
+        printf("\nPress 1 for menu:");
+        scanf("%d",&c);
+    }
+}
